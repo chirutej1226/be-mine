@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+        
+        body {
+            font-family: 'Indie Flower', cursive;
+            background-color: #fff5f7;
+        }
+
+        .bounce {
+            animation: bounce 0.8s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center h-screen m-0 overflow-hidden">
+    
+    <div id="container" class="text-center p-5">
+        <img id="gif-display" 
+             class="mx-auto rounded-xl" 
+             style="height: 250px; width: 250px; object-fit: cover;" 
+             src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95Nmh1MWVreWh4Z3B4cnZ6M3p3Z3p3Z3p3ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/c76IJLufpN762clOW7/giphy.gif" 
+             alt="Asking Bear">
+
+        <h1 id="main-text" class="text-4xl font-bold text-[#e91e63] my-8">Will you be my Valentine? ❤️</h1>
+
+        <div id="buttons-container" class="flex flex-row justify-center items-center gap-4">
+            <button id="yes-btn" 
+                    class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg transition-all duration-100 ease-in-out">
+                Yes
+            </button>
+            <button id="no-btn" 
+                    class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-all">
+                No
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const gifDisplay = document.getElementById('gif-display');
+        const mainText = document.getElementById('main-text');
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const buttonsContainer = document.getElementById('buttons-container');
+
+        const noPhrases = [
+            "No",
+            "Are you sure?",
+            "Really sure??",
+            "Pookie please...",
+            "Don't do this to me",
+            "I'm gonna cry...",
+            "You're breaking my heart ;("
+        ];
+
+        let noCount = 0;
+
+        noBtn.addEventListener('click', () => {
+            noCount++;
+            
+            // 1. Change the text of the No button
+            const nextText = noPhrases[Math.min(noCount, noPhrases.length - 1)];
+            noBtn.innerText = nextText;
+
+            // 2. Make the Yes button grow
+            // Scaling up based on the number of clicks
+            const newScale = 1 + (noCount * 0.6); 
+            yesBtn.style.transform = `scale(${newScale})`;
+
+            // 3. Move the No button slightly away or shift focus
+            const xMove = Math.random() * 50 - 25;
+            const yMove = Math.random() * 50 - 25;
+            noBtn.style.transform = `translate(${xMove}px, ${yMove}px)`;
+
+            // 4. Change to Sad Bear GIF after a few clicks
+            if (noCount >= 2) {
+                gifDisplay.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95Nmh1MWVreWh4Z3B4cnZ6M3p3Z3p3Z3p3ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/l378giAZgxPw3Wgx2/giphy.gif";
+            }
+        });
+
+        yesBtn.addEventListener('click', () => {
+            // Success State
+            mainText.innerText = "Yay!!! See you on the 14th! 😘";
+            mainText.classList.add("bounce");
+            
+            // Happy Bear GIF
+            gifDisplay.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHYyZWh6OHYyZWh6OHYyZWh6OHYyZWh6OHYyZWh6OHYyZWh6OHYyZWh6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/UMon0WU1WmZqc/giphy.gif";
+            
+            // Hide the buttons
+            buttonsContainer.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
